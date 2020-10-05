@@ -1,5 +1,8 @@
 package com.soft1851.contentcenter.controller;
 
+import com.soft1851.contentcenter.domain.dto.UserDTO;
+import com.soft1851.contentcenter.feignclient.TestBaiduFeignClient;
+import com.soft1851.contentcenter.feignclient.TestUserCenterFeignClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 import java.util.Random;
@@ -22,6 +26,7 @@ import java.util.Random;
 @Slf4j
 @RestController
 @RequestMapping(value = "test")
+@ApiIgnore
 public class TestController {
 
     @Autowired
@@ -47,6 +52,22 @@ public class TestController {
 //                .orElseThrow(() -> new IllegalArgumentException("当前没有实例"));
         log.info("请求的目标地址：{}",targetUrl);
         return restTemplate.getForObject(targetUrl,String.class);
+    }
+
+
+    @Autowired
+    private TestUserCenterFeignClient testUserCenterFeignClient;
+
+    @GetMapping(value = "/test-q")
+    public UserDTO query(UserDTO userDTO){
+        return testUserCenterFeignClient.query(userDTO);
+    }
+
+    @Autowired
+    private TestBaiduFeignClient testBaiduFeignClient;
+    @GetMapping(value = "/baidu")
+    public String baiduIndex(){
+        return this.testBaiduFeignClient.index();
     }
 }
 

@@ -1,0 +1,268 @@
+= share-app Swagger接口文档
+
+
+[[_overview]]
+== Overview
+github地址：https://github.com/zhao-rgb/micro-service
+
+
+=== Version information
+[%hardbreaks]
+__Version__ : API V1.0
+
+
+=== Contact information
+[%hardbreaks]
+__Contact__ : zxl
+__Contact Email__ : 1019916061@qq,com
+
+
+=== License information
+[%hardbreaks]
+__License__ : Apache
+__License URL__ : http://www.apache.org/
+__Terms of service__ : Terms of service
+
+
+=== URI scheme
+[%hardbreaks]
+__Host__ : localhost:8888
+__BasePath__ : /
+
+
+=== Tags
+
+* 公告接口 : Notice Controller
+* 分享接口 : Share Controller
+
+
+
+
+[[_paths]]
+== Resources
+
+[[_917a6a0ad3b9cec276900e3a86586a07]]
+=== 公告接口
+Notice Controller
+
+
+[[_gettopnoticeusingget]]
+==== 查询最新一条公告
+....
+GET /notice/one
+....
+
+
+===== Description
+查询最新一条公告
+
+
+===== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_fa86f1a57d6f758a93cb33b59c015654,公告>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+===== Produces
+
+* `*/*`
+
+
+[[_3ecef281a805f36ea4142625eefacc12]]
+=== 分享接口
+Share Controller
+
+
+[[_queryusingget]]
+==== 分享列表
+....
+GET /shares/query
+....
+
+
+===== Description
+分享列表
+
+
+===== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4,.^2"]
+|===
+|Type|Name|Description|Schema|Default
+|**Query**|**pageNo** +
+__optional__|pageNo|integer (int32)|`1`
+|**Query**|**pageSize** +
+__optional__|pageSize|integer (int32)|`10`
+|**Query**|**title** +
+__optional__|title|string|
+|**Query**|**userId** +
+__optional__|userId|integer (int32)|
+|===
+
+
+===== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< <<_c31f48f84ef207e66a03c015a7243b43,分享>> > array
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+===== Produces
+
+* `*/*`
+
+
+[[_findbyidusingget]]
+==== 通过id查询
+....
+GET /shares/{id}
+....
+
+
+===== Description
+通过id查询
+
+
+===== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|Type|Name|Description|Schema
+|**Path**|**id** +
+__required__|id|integer (int32)
+|===
+
+
+===== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_sharedto,ShareDTO>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+===== Produces
+
+* `*/*`
+
+
+
+
+[[_definitions]]
+== Definitions
+
+[[_sharedto]]
+=== ShareDTO
+
+[options="header", cols=".^3,.^4"]
+|===
+|Name|Schema
+|**auditStatus** +
+__optional__|string
+|**author** +
+__optional__|string
+|**buyCount** +
+__optional__|integer (int32)
+|**cover** +
+__optional__|string
+|**createTime** +
+__optional__|string (date-time)
+|**downloadUrl** +
+__optional__|string
+|**id** +
+__optional__|integer (int32)
+|**isOriginal** +
+__optional__|boolean
+|**price** +
+__optional__|integer (int32)
+|**reason** +
+__optional__|string
+|**showFlag** +
+__optional__|boolean
+|**summary** +
+__optional__|string
+|**title** +
+__optional__|string
+|**updateTime** +
+__optional__|string (date-time)
+|**userId** +
+__optional__|integer (int32)
+|**wxNickname** +
+__optional__|string
+|===
+
+
+[[_fa86f1a57d6f758a93cb33b59c015654]]
+=== 公告
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**content** +
+__optional__|公共内容|string
+|**createTime** +
+__optional__|创建时间|string (date-time)
+|**id** +
+__optional__|公共id|integer (int32)
+|**showFlag** +
+__optional__|是否显示 0：否 1：是|boolean
+|===
+
+
+[[_c31f48f84ef207e66a03c015a7243b43]]
+=== 分享
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**auditStatus** +
+__optional__|审核状态 NOT_YET: 待审核 PASSED:审核通过 REJECTED:审核不通过|string
+|**author** +
+__optional__|作者|string
+|**buyCount** +
+__optional__|下载数|integer (int32)
+|**cover** +
+__optional__|封面|string
+|**createTime** +
+__optional__|创建时间|string (date-time)
+|**downloadUrl** +
+__optional__|下载地址|string
+|**id** +
+__optional__|id|integer (int32)
+|**isOriginal** +
+__optional__|是否原创 0:否 1:是|boolean
+|**price** +
+__optional__|价格（需要的积分）|integer (int32)
+|**reason** +
+__optional__|审核不通过原因|string
+|**showFlag** +
+__optional__|是否显示 0:否 1:是|boolean
+|**summary** +
+__optional__|概要信息|string
+|**title** +
+__optional__|标题|string
+|**updateTime** +
+__optional__|修改时间|string (date-time)
+|**userId** +
+__optional__|发布人id|integer (int32)
+|===
+
+
+
+
+

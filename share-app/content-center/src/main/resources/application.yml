@@ -1,10 +1,12 @@
 server:
-  port: 8002
+  port: 8888
 spring:
   application:
     name: content-center
+  main:
+    allow-bean-definition-overriding: true
   datasource:
-    url: jdbc:mysql://101.200.130.236:3306/content_center
+    url: jdbc:mysql://101.200.130.236:3306/content_center?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     hikari:
       username: root
       password: abc.123
@@ -13,7 +15,7 @@ spring:
     nacos:
       discovery:
         # 指定nacos server的地址
-        server-addr: localhost:8848
+        server-addr: 101.200.130.236:8848
 #        namespace: 77a84fcc-e750-4c71-a3cc-245117cf3b3d
 
 management:
@@ -34,3 +36,17 @@ ribbon:
   eager-load:
     enabled: true
     clients: user-center
+
+
+# feign配置日志
+logging:
+  level:
+    com.soft1851.contentcenter.feignclient.UserCenterFeignClient: debug
+
+## feign细粒度配置
+#feign:
+#  client:
+#    config:
+#      # 想要调用的微服务名称
+#      user-center:
+#        loggerLevel: full
