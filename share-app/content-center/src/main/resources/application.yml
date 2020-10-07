@@ -16,8 +16,13 @@ spring:
       discovery:
         # 指定nacos server的地址
         server-addr: 101.200.130.236:8848
-#        namespace: 77a84fcc-e750-4c71-a3cc-245117cf3b3d
+        #        namespace: 77a84fcc-e750-4c71-a3cc-245117cf3b3d
+    sentinel:
+      transport:
+        dashboard: localhost:8080
 
+
+# Spring Boot监控
 management:
   endpoints:
     web:
