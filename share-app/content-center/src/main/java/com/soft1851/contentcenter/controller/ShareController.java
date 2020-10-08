@@ -1,6 +1,7 @@
 package com.soft1851.contentcenter.controller;
 
 import com.soft1851.contentcenter.domain.dto.ShareDTO;
+import com.soft1851.contentcenter.domain.dto.ShareRequestDTO;
 import com.soft1851.contentcenter.domain.entity.Share;
 import com.soft1851.contentcenter.service.ShareService;
 import io.swagger.annotations.Api;
@@ -45,6 +46,11 @@ public class ShareController {
         return this.shareService.query(title,pageNo,pageSize,userId).getList();
     }
 
+    @PostMapping(value = "/contribute")
+    @ApiOperation(value = "投稿", notes = "投稿")
+    public int contribute(@RequestBody ShareRequestDTO shareRequestDTO) {
+        return shareService.contribute(shareRequestDTO);
+    }
 
     @GetMapping(value = "/hello")
     @ApiIgnore

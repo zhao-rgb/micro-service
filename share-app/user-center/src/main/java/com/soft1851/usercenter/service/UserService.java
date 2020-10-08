@@ -1,5 +1,6 @@
 package com.soft1851.usercenter.service;
 
+import com.soft1851.usercenter.domain.dto.UserAddBonusMsgDTO;
 import com.soft1851.usercenter.domain.entity.User;
 
 /**
@@ -18,5 +19,12 @@ public interface UserService {
      * @return User
      */
     User findById(Integer id);
+
+    /**
+     * 添加一条积分记录
+     *
+     * @param userAddBonusMsgDTO
+     */
+    int addBonus(UserAddBonusMsgDTO userAddBonusMsgDTO);
 
 }

@@ -1,53 +1,50 @@
-package com.soft1851.usercenter.service.impl;
+package com.soft1851.usercenter.rocketmq;
 
 import com.soft1851.usercenter.dao.BonusEventLogMapper;
 import com.soft1851.usercenter.dao.UserMapper;
 import com.soft1851.usercenter.domain.dto.UserAddBonusMsgDTO;
 import com.soft1851.usercenter.domain.entity.BonusEventLog;
 import com.soft1851.usercenter.domain.entity.User;
-import com.soft1851.usercenter.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+
 /**
  * @author zhao
- * @className UserServiceImpl
+ * @className AddBonusListener
  * @Description TODO
- * @Date 2020/9/29
+ * @Date 2020/10/7
  * @Version 1.0
  **/
-@Slf4j
 @Service
+@RocketMQMessageListener(consumerGroup = "consumer", topic = "add-bonus")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class UserServiceImpl implements UserService {
+public class AddBonusListener implements RocketMQListener<UserAddBonusMsgDTO> {
+
     private final UserMapper userMapper;
     private final BonusEventLogMapper bonusEventLogMapper;
 
     @Override
-    public User findById(Integer id) {
-        return this.userMapper.selectByPrimaryKey(id);
-
-    }
-
-    @Override
-    public int addBonus(UserAddBonusMsgDTO userAddBonusMsgDTO) {
+    public void onMessage(UserAddBonusMsgDTO userAddBonusMsgDTO) {
+        //1、为用户加积分
         Integer userId = userAddBonusMsgDTO.getUserId();
-        System.out.println(userId);
         User user = this.userMapper.selectByPrimaryKey(userId);
         user.setBonus(user.getBonus() + userAddBonusMsgDTO.getBonus());
         this.userMapper.updateByPrimaryKeySelective(user);
-        return this.bonusEventLogMapper.insert(BonusEventLog.builder()
+        //2、写积分日志
+        this.bonusEventLogMapper.insert(BonusEventLog.builder()
                 .userId(userId)
                 .value(userAddBonusMsgDTO.getBonus())
                 .event("CONTRIBUTE")
-                .description("投稿加积分")
                 .createTime(Timestamp.valueOf(LocalDateTime.now()))
-                .build());
-
+                .description("投稿加积分")
+                .build()
+        );
     }
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 
 /**
  * @author zxl
+ * 审核状态枚举
  */
 
 @Getter
@@ -17,7 +18,7 @@ public enum AuditStatusEnum {
     /**
      * 审核通过
      */
-    PASSED,
+    PASS,
     /**
      * 审核不通过
      */

@@ -1,4 +1,4 @@
-package com.soft1851.contentcenter.common;
+package com.soft1851.usercenter.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author zhao
  * @className ResponseResult
  * @Description TODO
- * @Date 2020/9/29
+ * @Date 2020/10/8
  * @Version 1.0
  **/
 @Data

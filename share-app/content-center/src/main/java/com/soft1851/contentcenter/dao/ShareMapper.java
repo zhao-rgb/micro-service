@@ -12,4 +12,5 @@ import tk.mybatis.mapper.common.Mapper;
  * @Version 1.0
  **/
 public interface ShareMapper extends Mapper<Share> {
+
 }

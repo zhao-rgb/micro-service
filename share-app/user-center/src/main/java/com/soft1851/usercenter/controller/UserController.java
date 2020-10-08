@@ -1,14 +1,13 @@
 package com.soft1851.usercenter.controller;
 
+import com.soft1851.usercenter.common.ResponseResult;
+import com.soft1851.usercenter.domain.dto.UserAddBonusMsgDTO;
 import com.soft1851.usercenter.domain.entity.User;
 import com.soft1851.usercenter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author zhao
@@ -33,6 +32,12 @@ public class UserController {
     @GetMapping("/q")
     public User query(User user){
         return user;
+    }
+
+    @PostMapping("/bonus/new")
+    public ResponseResult addBonus(@RequestBody UserAddBonusMsgDTO userAddBonusMsgDTO) {
+        System.out.println("添加一条记录");
+        return ResponseResult.builder().code(userService.addBonus(userAddBonusMsgDTO)).build();
     }
 
 }
