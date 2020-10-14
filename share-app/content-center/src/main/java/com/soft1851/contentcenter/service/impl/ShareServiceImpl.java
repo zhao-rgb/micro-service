@@ -145,17 +145,17 @@ public class ShareServiceImpl implements ShareService {
 
         // 3、如果是PASS，那么发送消息给rocketmq，让用户中心去消费，并为发布人添加积分
         if (AuditStatusEnum.PASS.equals(shareAuditDTO.getAuditStatusEnum())){
-//            this.rocketMQTemplate.convertAndSend(
-//                    "add-bonus",
-//                    UserAddBonusMsgDTO.builder()
-//                    .userId(share.getUserId())
-//                    .bonus(50)
-//                    .build());
-            // 4、使用Feign来调用用户中心更改积分的接口（同步）
-            this.userCenterFeignClient.addBonus(UserAddBonusMsgDTO.builder()
+            this.rocketMQTemplate.convertAndSend(
+                    "add-bonus",
+                    UserAddBonusMsgDTO.builder()
                     .userId(share.getUserId())
                     .bonus(50)
                     .build());
+            // 4、使用Feign来调用用户中心更改积分的接口（同步）
+//            this.userCenterFeignClient.addBonus(UserAddBonusMsgDTO.builder()
+//                    .userId(share.getUserId())
+//                    .bonus(50)
+//                    .build());
         }
 
         return share;
