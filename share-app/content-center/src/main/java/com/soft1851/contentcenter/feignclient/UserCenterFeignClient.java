@@ -1,7 +1,7 @@
 package com.soft1851.contentcenter.feignclient;
 
-import com.soft1851.contentcenter.common.ResponseResult;
-import com.soft1851.contentcenter.domain.dto.UserAddBonusMsgDTO;
+import com.soft1851.contentcenter.configuration.UserCenterFeignConfiguration;
+import com.soft1851.contentcenter.domain.dto.UserAddBonusDTO;
 import com.soft1851.contentcenter.domain.dto.UserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * @author zhao
  * @className UserCenterFeignClient
- * @Description TODO
+ * @Description 用户中心对应的Feign客户端声明接口
  * @Date 2020/9/29
  * @Version 1.0
  **/
-@FeignClient(name = "user-center")
+@FeignClient(name = "user-center", configuration = UserCenterFeignConfiguration.class)
 public interface UserCenterFeignClient {
     /**
      * http://user-center/users/{id}
@@ -31,11 +31,11 @@ public interface UserCenterFeignClient {
     /**
      * 添加积分记录
      *
-     * @param userAddBonusMsgDTO
+     * @param userAddBonusDTO
      * @return
      */
     @PostMapping("/users/bonus/new")
-    ResponseResult addBonus(@RequestBody UserAddBonusMsgDTO userAddBonusMsgDTO);
+    UserDTO addBonus(@RequestBody UserAddBonusDTO userAddBonusDTO);
 
 
     /**

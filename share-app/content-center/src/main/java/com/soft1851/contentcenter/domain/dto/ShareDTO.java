@@ -1,5 +1,7 @@
 package com.soft1851.contentcenter.domain.dto;
 
+import com.soft1851.contentcenter.domain.entity.Share;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -94,8 +96,13 @@ public class ShareDTO {
      */
     private String reason;
 
+
+    @ApiModelProperty(name = "share",value = "分享资源信息")
+    private Share share;
+
     /**
-     * 发布人
+     * 发布人昵称
      */
+    @ApiModelProperty(name = "wxNickname",value = "发布人昵称")
     private String wxNickname;
 }

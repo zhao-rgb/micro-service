@@ -1,5 +1,7 @@
 package com.soft1851.contentcenter.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.soft1851.contentcenter.dao.MidUserShareMapper;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
+import java.nio.charset.IllegalCharsetNameException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -52,11 +55,14 @@ public class ShareServiceImpl implements ShareService {
         // 2. 复杂的url难以维护：https://user-center/s?ie={ie}&f={f}&rsv_bp=1&rsv_idx=1&tn=baidu&wd=a&rsv_pq=c86459bd002cfbaa&rsv_t=edb19hb%2BvO%2BTySu8dtmbl%2F9dCK%2FIgdyUX%2BxuFYuE0G08aHH5FkeP3n3BXxw&rqlang=cn&rsv_enter=1&rsv_sug3=1&rsv_sug2=0&inputT=611&rsv_sug4=611
         // 3. 难以相应需求的变化，变化很没有幸福感
         // 4. 编程体验不统一
+        //通过feign请求用户中心接口，获得发布人详情
         UserDTO userDTO = this.userCenterFeignClient.findUserById(userId);
-
+        System.out.println(userDTO);
         ShareDTO shareDTO = new ShareDTO();
+
         // 属性的装配
         BeanUtils.copyProperties(share, shareDTO);
+
         shareDTO.setWxNickname(userDTO.getWxNickname());
         return shareDTO;
     }
@@ -161,6 +167,70 @@ public class ShareServiceImpl implements ShareService {
         return share;
     }
 
+    @Override
+    public Share exchange(ExchangeDTO exchangeDTO) {
+        int userId = exchangeDTO.getUserId();
+        int shareId = exchangeDTO.getShareId();
+        //1、根据id查询share，校验是否存在
+        Share share = this.shareMapper.selectByPrimaryKey(shareId);
+        if (share == null) {
+            throw new IllegalCharsetNameException("该分享不存在");
+        }
+        Integer price = share.getPrice();
+
+        //2、如果当前用户已经兑换过该分享。则直接返回
+        MidUserShare midUserShare = this.midUserShareMapper.selectOne(
+                MidUserShare.builder()
+                .shareId(shareId)
+                .userId(userId)
+                .build()
+        );
+        if(midUserShare != null) {
+            return share;
+        }
+        //3、根据当前登录的用户id，查询积分是否够
+        //这里一定要注意通过调用户中心接口得到的返回值，外面已经封装了一层了，要解析才能拿到真正的用户数据
+        UserDTO userDTO = this.userCenterFeignClient.findUserById(userId);
+//        UserDTO userDTO = convert(responseDTO);
+        System.out.println(userDTO);
+        if (price > userDTO.getBonus()) {
+            throw new IllegalArgumentException("用户积分不够！");
+        }
+
+        //4、扣积分
+        this.userCenterFeignClient.addBonus(
+                UserAddBonusDTO.builder()
+                        .userId(userId)
+                        .bonus(price * -1)
+                        .build()
+        );
+        //5、向mid_user_share表里插入一条数据
+        this.midUserShareMapper.insert(
+                midUserShare.builder()
+                .userId(userId)
+                .shareId(shareId)
+                .build()
+        );
+        return share;
+    }
+
+
+    /**
+     * 将统一的返回响应结果转换为UserDTO类型
+     * @param responseDTO
+     * @return
+     */
+    private UserDTO convert(ResponseDTO responseDTO) {
+        ObjectMapper mapper = new ObjectMapper();
+        UserDTO userDTO = null;
+        try {
+            String json = mapper.writeValueAsString(responseDTO.getData());
+            userDTO = mapper.readValue(json, UserDTO.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return userDTO;
+    }
 
     @Override
     public String getHello() {

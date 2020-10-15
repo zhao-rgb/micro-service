@@ -1,6 +1,6 @@
 package com.soft1851.contentcenter.controller;
 
-import com.alibaba.csp.sentinel.util.StringUtil;
+import com.soft1851.contentcenter.domain.dto.ExchangeDTO;
 import com.soft1851.contentcenter.domain.dto.ShareDTO;
 import com.soft1851.contentcenter.domain.dto.ShareRequestDTO;
 import com.soft1851.contentcenter.domain.entity.Share;
@@ -50,11 +50,11 @@ public class ShareController {
             pageSize = 100;
         }
         Integer userId = null;
-        if (StringUtil.isNotBlank(token)){
+        if (!"no-token".equals(token)) {
             Claims claims = this.jwtOperator.getClaimsFromToken(token);
             log.info(claims.toString());
-            userId = (Integer)claims.get("id");
-        }else {
+            userId = (Integer) claims.get("id");
+        } else {
             log.info("没有token");
         }
         return this.shareService.query(title,pageNo,pageSize,userId).getList();
@@ -64,6 +64,13 @@ public class ShareController {
     @ApiOperation(value = "投稿", notes = "投稿")
     public int contribute(@RequestBody ShareRequestDTO shareRequestDTO) {
         return shareService.contribute(shareRequestDTO);
+    }
+
+    @PostMapping("/exchange")
+//    @CheckLogin
+    public Share exchange(@RequestBody ExchangeDTO exchangeDTO) {
+        System.out.println(exchangeDTO + ">>>>>>>>>>>");
+        return this.shareService.exchange(exchangeDTO);
     }
 
     @GetMapping(value = "/hello")

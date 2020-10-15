@@ -1,6 +1,7 @@
 package com.soft1851.contentcenter.service;
 
 import com.github.pagehelper.PageInfo;
+import com.soft1851.contentcenter.domain.dto.ExchangeDTO;
 import com.soft1851.contentcenter.domain.dto.ShareAuditDTO;
 import com.soft1851.contentcenter.domain.dto.ShareDTO;
 import com.soft1851.contentcenter.domain.dto.ShareRequestDTO;
@@ -45,6 +46,15 @@ public interface ShareService {
      * @return
      */
     Share auditById(Integer id, ShareAuditDTO shareAuditDTO);
+
+
+    /**
+     * 积分兑换资源
+     *
+     * @param exchangeDTO
+     * @return Share
+     */
+    Share exchange(ExchangeDTO exchangeDTO);
 
 
     String getHello();

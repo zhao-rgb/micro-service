@@ -4,7 +4,7 @@ spring:
   application:
     name: user-center
   datasource:
-    url: jdbc:mysql://101.200.130.236:3306/user_center
+    url: jdbc:mysql://101.200.130.236:3306/user_center?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     hikari:
       username: root
       password: abc.123
@@ -29,8 +29,8 @@ management:
     health:
       show-details: always
 
-rocketmq:
-  name-server: 101.200.130.236:9876
+#rocketmq:
+#  name-server: 101.200.130.236:9876
 
 jwt:
   secret: aaaaaaabbbbbbcccccdddddaaaaaaabbbbbbcccccdddddaaaaaaabbbbbbcccccddddd
