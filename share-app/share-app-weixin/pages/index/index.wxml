@@ -1,0 +1,82 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+
+  <!-- tab -->
+  <view class="tab">
+    <view class="tab-item {{tab==0? 'active':''}}" data-tab="0" bindtap="changeTab">发现</view>
+    <view class="tab-item {{tab==1? 'active':''}}" data-tab="1" bindtap="changeTab">使用说明</view>
+  </view>
+
+  <!-- tab1 -->
+  <view class="share-list" wx:if="{{tab==0}}">
+
+    <view class="nocice">
+      <text>{{notice.content}}</text>
+    </view>
+    <view>
+      <view>
+        <view class="weui-search-bar">
+          <view class="weui-search-bar__form">
+            <!-- 最初始时的搜索框 -->
+            <view class="weui-search-bar__box">
+              <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+              <input type="text" class="weui-search-bar__input" placeholder="搜索" />
+            </view>
+            <!-- 可编辑时的搜索框 -->
+            <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+              <icon class="weui-icon-search" type="search" size="14"></icon>
+              <view class="weui-search-bar__text">搜索</view>
+            </label>
+          </view>
+          <!-- 取消搜索 -->
+          <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:for="{{shareList}}" wx:for-item="share" class="share-item">
+      <view wx:if="{{share.isOriginal==0}}" class="origin-label {{share.isOriginal==0? 'one':'two'}}">原创</view>
+      <view wx:else class="origin-label {{share.isOriginal==0? 'one':'two'}}">转载</view>
+      <image src="{{share.cover}}"></image>
+      <view class="item-main">
+        <text class="item-title">{{share.title}}</text>
+        <text class="item-summary">{{share.summary}}</text>
+      </view>
+      <view class="item-duihuan">
+        <view wx:if="{{share.downloadUrl==null}}" class="share-btn" data-item="{{share}}" bindtap="goDetail">兑换 ></view>
+        <view wx:else class="share-btn" data-item="{{share}}" bindtap="downloadUrl">下载 ></view>
+      </view>
+
+    </view>
+  </view>
+
+  <!-- tab2 -->
+  <view wx:else class="dicription">
+    <text>资源均为免费,段焕后即可查看下载地址：点击我的->我的兑换，即可查看，下载兑换过的资源。</text>
+
+    <view>
+      <text class="dicription-title">获得积分的方式</text>
+      <view>> 每日签到</view>
+      <view>> 投稿</view>
+      <view>> 转发</view>
+      <view>> 提建议、意见</view>
+    </view>
+
+    <view>
+      <text class="dicription-title">深入交流</text>
+      <view>> 技术交流QQ群：731548893</view>
+      <view>> 技术交流微信群：叫我微信，注明加微信群</view>
+      <view>> 私人微信：jumping_me</view>
+    </view>
+
+    <view>
+      <text class="dicription-title">公众号（技术干活分享</text>
+      <view>> 技术交流QQ群：731548893</view>
+      <view>> 技术交流微信群：叫我微信，注明加微信群</view>
+      <view>> 私人微信：jumping_me</view>
+    </view>
+
+
+  </view>
+
+</view>

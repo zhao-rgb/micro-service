@@ -1,0 +1,13 @@
+<!--pages/shareDetail/shareDetail.wxml-->
+<view class="container">
+  <view class="link">
+    <view><text class="title">{{share.title}}</text></view>
+    <view>
+      <image class="share-img" src="{{share.cover}}"></image>
+    </view>
+    <text class="link-txt" selectable="true">链接：{{share.downloadUrl}} 提取码：eccb 复制这段内容后打开百度网盘手机App，操作更方便哦</text>
+  </view>
+
+  <button bindlongpress ='copy' data-copy='{{share.downloadUrl}}' class="btn" bindtap="copyTBL">复制下载地址</button>
+  
+</view>

@@ -1,0 +1,42 @@
+/* pages/shareDetail/shareDetail.wxss */
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  padding: 30rpx;
+}
+
+.link {
+  padding: 20rpx;
+  word-wrap: break-word;
+}
+
+.title {
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.share-img {
+  width: 400rpx;
+  height: 400rpx;
+  border-radius: 15%;
+  display: block;
+  margin: 0 auto;
+}
+
+.link-txt {
+  font-size: 28rpx;
+  color: gray;
+}
+
+.btn {
+  color: white;
+  /* background-color: rgb(69, 211, 69); */
+  background-color: rgb(208, 97, 83);
+  width: 100% !important;
+  padding: 28rpx;
+  font-size: 32rpx;
+  margin-top: 20rpx;
+}
