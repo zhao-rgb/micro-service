@@ -73,6 +73,30 @@ public class ShareController {
         return this.shareService.exchange(exchangeDTO);
     }
 
+    @PostMapping(value = "/myContribution")
+    @ApiOperation(value = "我的投稿列表",notes = "我的投稿列表")
+    public List<Share> myContribution(
+            @RequestParam(required = false,defaultValue = "1") Integer pageNo,
+            @RequestParam(required = false,defaultValue = "10") Integer pageSize,
+            @RequestParam(required = false) Integer userId) {
+        if (pageSize > 100) {
+            pageSize = 100;
+        }
+        return this.shareService.MyContribute(pageNo,pageSize,userId).getList();
+    }
+
+    @PostMapping(value = "/myExchange")
+    @ApiOperation(value = "我的兑换列表",notes = "我的兑换列表")
+    public List<Share> myExchange(
+            @RequestParam(required = false,defaultValue = "1") Integer pageNo,
+            @RequestParam(required = false,defaultValue = "10") Integer pageSize,
+            @RequestParam(required = false) Integer userId) {
+        if (pageSize > 100) {
+            pageSize = 100;
+        }
+        return this.shareService.MyExchange(pageNo,pageSize,userId).getList();
+    }
+
     @GetMapping(value = "/hello")
     @ApiIgnore
     public String getHello(){

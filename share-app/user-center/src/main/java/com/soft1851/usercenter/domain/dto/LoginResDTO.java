@@ -25,4 +25,5 @@ public class LoginResDTO {
      * token数据
      */
     private JwtTokenRespDto token;
+    private Integer isUserSignin;
 }

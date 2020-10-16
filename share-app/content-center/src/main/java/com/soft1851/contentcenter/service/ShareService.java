@@ -56,6 +56,23 @@ public interface ShareService {
      */
     Share exchange(ExchangeDTO exchangeDTO);
 
+    /**
+     * 根据用户查询我的投稿列表
+     * @param pageNo
+     * @param pageSize
+     * @param userId
+     * @return
+     */
+    PageInfo<Share> MyContribute(Integer pageNo,Integer pageSize,Integer userId);
+
+    /**
+     * 根据用户id查询我的兑换
+     * @param pageNo
+     * @param pageSize
+     * @param userId
+     * @return
+     */
+    PageInfo<Share> MyExchange(Integer pageNo,Integer pageSize,Integer userId);
 
     String getHello();
 }

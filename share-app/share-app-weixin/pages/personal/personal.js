@@ -30,6 +30,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    //积分更新
+    API.findById().then(res => {
+      console.log(res)
+      app.globalData.user = res
+    })
     this.setData({
       userInfo: app.globalData.user
     })
@@ -71,7 +76,7 @@ Page({
   },
 
   /**
-   * 登录，目前只是走个形式
+   * 登录
    */
   weixinLogin() {
     API.login({
@@ -83,10 +88,64 @@ Page({
       console.log(request)
       app.globalData.user = request.user
       app.globalData.token = request.token.token
-      console.log(app.globalData.token)
+      app.globalData.isUserSignin = request.isUserSignin
+      console.log(app.globalData.isUserSignin)
       this.setData({
         userInfo: app.globalData.user
       })
     })
+  },
+  /**
+   * 前往详情页
+   */
+  goDetail() {
+    wx.navigateTo({
+      url: '../personal/exchange/exchange',
+    })
+  },
+  total() {
+    wx.navigateTo({
+      url: '../personal/total/total',
+    })
+  },
+  myContribution() {
+    wx.navigateTo({
+      url: '../personal/myContribution/myContribution',
+    })
+  },
+  //签到
+  qiandao() {
+    if (app.globalData.isUserSignin == 1) {
+      wx.showModal({
+        title: '签到失败',
+        content: '今天已经签到过了哦！！！',
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    } else {
+      API.signin({
+        userId: app.globalData.user.id
+      }).then(res => {
+        const request = res
+        console.log(request)
+        app.globalData.isUserSignin = 1
+      })
+      wx.showLoading({
+        title: "正在加载中...",
+        duration: 8000
+      })
+      wx.showToast({
+        title: '成功',
+        icon: 'success', //当icon：'none'时，没有图标 只有文字
+        duration: 2000
+      })
+
+    }
+
   }
 })

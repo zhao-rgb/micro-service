@@ -118,5 +118,21 @@ module.exports = {
   findById: () => {
     console.log('查询用户积分')
     return get('/users/' + app.globalData.user.id, 'json') //查询用户积分
+  },
+  total: () => {
+    console.log('查询用户积分明细')
+    return get('/users/bonus/' + app.globalData.user.id, 'json') //查询用户积分明细
+  },
+  signin: (data) => {
+    console.log('用户签到')
+    return post('/users/signin', data, 'json') //用户签到
+  },
+  myContribution: (data) => {
+    console.log('我的投稿列表')
+    return post('/shares/myContribution', data, 'json') //我的投稿列表
+  },
+  myExchange: (data) => {
+    console.log('我的兑换列表')
+    return post('/shares/myExchange', data, 'json') //我的兑换列表
   }
 }

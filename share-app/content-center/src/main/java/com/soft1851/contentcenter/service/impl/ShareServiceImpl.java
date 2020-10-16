@@ -22,6 +22,7 @@ import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.StringUtil;
 
 import java.nio.charset.IllegalCharsetNameException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -202,11 +203,13 @@ public class ShareServiceImpl implements ShareService {
                 UserAddBonusDTO.builder()
                         .userId(userId)
                         .bonus(price * -1)
+                        .description("兑换减积分")
+                        .event("BUY")
                         .build()
         );
         //5、向mid_user_share表里插入一条数据
         this.midUserShareMapper.insert(
-                midUserShare.builder()
+                MidUserShare.builder()
                 .userId(userId)
                 .shareId(shareId)
                 .build()
@@ -214,6 +217,31 @@ public class ShareServiceImpl implements ShareService {
         return share;
     }
 
+    @Override
+    public PageInfo<Share> MyContribute(Integer pageNo, Integer pageSize, Integer userId) {
+        PageHelper.startPage(pageNo,pageSize);
+        Example example = new Example(Share.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId",userId);
+        return new PageInfo<>(this.shareMapper.selectByExample(example));
+    }
+
+    @Override
+    public PageInfo<Share> MyExchange(Integer pageNo, Integer pageSize, Integer userId) {
+        PageHelper.startPage(pageNo,pageSize);
+        //构造查询实例
+        Example example = new Example(Share.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userId",userId);
+
+        List<MidUserShare> midUserShares = this.midUserShareMapper.selectByExample(example);
+        List<Share> shares = new ArrayList<>();
+        midUserShares.forEach(midUserShare -> {
+            Share share = this.shareMapper.selectByPrimaryKey(midUserShare.getShareId());
+            shares.add(share);
+        });
+        return new PageInfo<>(shares);
+    }
 
     /**
      * 将统一的返回响应结果转换为UserDTO类型

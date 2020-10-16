@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * @author zhao
  * @className UserAddBonusMsgDTO
- * @Description TODO
+ * @Description 用户增加积分消息数据传输对象
  * @Date 2020/10/7
  * @Version 1.0
  **/
@@ -26,4 +26,13 @@ public class UserAddBonusMsgDTO {
      * 加多少积分
      */
     private Integer bonus;
+    /**
+     * 描述
+     */
+    private String description;
+
+    /**
+     * 事件
+     */
+    private String event;
 }

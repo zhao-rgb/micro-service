@@ -1,7 +1,9 @@
 package com.soft1851.usercenter.service;
 
 import com.soft1851.usercenter.domain.dto.LoginDTO;
+import com.soft1851.usercenter.domain.dto.ResponseDTO;
 import com.soft1851.usercenter.domain.dto.UserAddBonusMsgDTO;
+import com.soft1851.usercenter.domain.dto.UserSignInDTO;
 import com.soft1851.usercenter.domain.entity.User;
 
 /**
@@ -34,5 +36,19 @@ public interface UserService {
      * @return
      */
     User login(LoginDTO loginDTO);
+
+    /**
+     * 用户签到
+     * @param signInDTO
+     * @return
+     */
+    ResponseDTO signIn(UserSignInDTO signInDTO);
+
+    /**
+     * 判断用户是否签到的
+     * @param signInDTO
+     * @return
+     */
+    ResponseDTO checkIsSign(UserSignInDTO signInDTO);
 
 }

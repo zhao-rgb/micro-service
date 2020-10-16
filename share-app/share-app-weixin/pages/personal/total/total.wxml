@@ -1,0 +1,9 @@
+
+  <view class="total-item" wx:for="{{totalList}}" wx:for-item="total">
+    <view class="total-a">
+     <image class="total-a-img" src="https://kkkksslls.oss-cn-beijing.aliyuncs.com/campus/积分.png"></image>
+    </view>
+    <view class="total-b">{{total.createTime}}-{{total.description}}</view>
+    <view class="total-c">{{total.value}}</view>
+  </view>
+  

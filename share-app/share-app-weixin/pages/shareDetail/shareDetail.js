@@ -100,13 +100,6 @@ Page({
       })
     }
     //积分更新
-    // API.findById().then(res => {
-    //   that.setData({
-    //     user: res.data
-    //   })
-    //   console.log('啦啦啦')
-    //   console.log(res+'啦')
-    // })
     API.findById().then(res =>{
       console.log(res)
       app.globalData.user = res

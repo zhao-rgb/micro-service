@@ -60,6 +60,13 @@ public class UserController {
                 token,
                 jwtOperator.getExpirationTime()
         );
+        ResponseDTO responseDTO = this.userService.checkIsSign(UserSignInDTO.builder().userId(user.getId()).build());
+        int isUserSignin = 0;
+        if (responseDTO.getCode()=="200"){
+            isUserSignin = 0;
+        }else {
+            isUserSignin = 1;
+        }
         return LoginResDTO.builder()
                 .user(UserRespDto.builder()
                         .id(user.getId())
@@ -72,7 +79,12 @@ public class UserController {
                         .token(token)
                         .expirationTime(jwtOperator.getExpirationTime().getTime())
                         .build())
+                .isUserSignin(isUserSignin)
                 .build();
     }
 
+    @PostMapping(value = "/signin")
+    public ResponseDTO signIn(@RequestBody UserSignInDTO userSignInDTO){
+        return userService.signIn(userSignInDTO);
+    }
 }

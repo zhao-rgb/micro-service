@@ -14,12 +14,12 @@
       <image src="{{userInfo.avatarUrl}}"></image>
       <text>{{userInfo.wxNickName}}</text>
       <text>积分:{{userInfo.bonus}}</text>
-      <view class="qiandao">签到</view>
+      <view class="qiandao" bindtap="qiandao">签到</view>
     </view>
     <view class="my-manage">
-      <view class="manage-item">我的兑换</view>
-      <view class="manage-item">积分明细</view>
-      <view class="manage-item">我的投稿</view>
+      <view class="manage-item" data-item="{{share}}" bindtap="goDetail">我的兑换</view>
+      <view class="manage-item" bindtap="total">积分明细</view>
+      <view class="manage-item"bindtap="myContribution">我的投稿</view>
     </view>
   </view>
 
