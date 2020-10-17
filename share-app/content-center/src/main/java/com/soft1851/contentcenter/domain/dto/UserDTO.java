@@ -1,5 +1,6 @@
 package com.soft1851.contentcenter.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -41,11 +42,13 @@ public class UserDTO {
     /**
      * 创建时间
      */
+    @JsonFormat(locale = "zh", timezone = "GMT+8" , pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
      * 修改时间
      */
+    @JsonFormat(locale = "zh", timezone = "GMT+8" , pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /**

@@ -99,9 +99,24 @@ Page({
         userInfo: app.globalData.user
       })
     })
-    //Tab跳转到主页
-    wx.switchTab({
-      url: '../index/index'
+    wx.showModal({
+      title: '投稿成功',
+      content: '投稿成功了哦！！！',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          //Tab跳转到主页
+          wx.switchTab({
+            url: '../index/index'
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+          //Tab跳转到主页
+          wx.switchTab({
+            url: '../index/index'
+          })
+        }
+      }
     })
   },
   titleInput: function (e) {

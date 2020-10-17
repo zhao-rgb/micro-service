@@ -142,10 +142,21 @@ Page({
       wx.showToast({
         title: '成功',
         icon: 'success', //当icon：'none'时，没有图标 只有文字
-        duration: 2000
       })
 
     }
-
+  },
+  //退出登录
+  exit(){
+    app.globalData.user = null
+    app.globalData.token = null
+    this.setData({
+      userInfo:null
+    })
+    wx.showToast({
+      title: '退出登录成功',
+      icon: 'success', //当icon：'none'时，没有图标 只有文字
+      duration: 2000
+    })
   }
 })

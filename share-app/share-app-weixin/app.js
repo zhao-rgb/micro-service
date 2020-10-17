@@ -13,7 +13,7 @@ App({
           url: 'https://api.weixin.qq.com/sns/jscode2session',
           data: {
             appid: 'wxbf5467f912902705',
-            secret: '72943cf29d99ae697822c4442b0cca6c',
+            secret: 'a44a5a4445a9e79bb2a17f605f6cf483',
             js_code: res.code,
             grant_type: 'authorization_code'
           },

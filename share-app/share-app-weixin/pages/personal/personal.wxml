@@ -15,6 +15,7 @@
       <text>{{userInfo.wxNickName}}</text>
       <text>积分:{{userInfo.bonus}}</text>
       <view class="qiandao" bindtap="qiandao">签到</view>
+      <view class="qiandao" bindtap="exit">退出</view>
     </view>
     <view class="my-manage">
       <view class="manage-item" data-item="{{share}}" bindtap="goDetail">我的兑换</view>

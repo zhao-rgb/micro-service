@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    myContributionList: null
+    myContributionList: null,
+    user: null,
   },
 
   /**
@@ -72,5 +73,16 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+    /**
+   * 前往链接页
+   */
+  goDetail(e) {
+    //取出绑定对象
+    console.log(e)
+    var share = e.currentTarget.dataset.item
+    wx.navigateTo({
+      url: '../../duihuanSuccess/duihuanSuccess?share=' + JSON.stringify(share),
+    })
+  },
 })

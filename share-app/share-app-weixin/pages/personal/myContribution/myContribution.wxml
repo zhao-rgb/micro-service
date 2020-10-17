@@ -1,2 +1,23 @@
-<!--pages/personal/myContribution/myContribution.wxml-->
-<text>pages/personal/myContribution/myContribution.wxml</text>
+
+<view class="container">
+
+
+
+
+
+  <view wx:for="{{myContributionList}}" wx:for-item="share" class="share-item">
+    <view wx:if="{{share.isOriginal==0}}" class="origin-label {{share.isOriginal==0? 'one':'two'}}">原创</view>
+    <view wx:else class="origin-label {{share.isOriginal==0? 'one':'two'}}">转载</view>
+    <image src="{{share.cover}}"></image>
+    <view class="item-main">
+      <text class="item-title">{{share.title}}</text>
+      <text class="item-summary">{{share.summary}}</text>
+      <text class="item-time">{{share.createTime}}</text>
+    </view>
+    <view class="item-duihuan">
+      <view wx:if="{{share.auditStatus=='NOT_YET'}}" class="share-btn" data-item="{{share}}" bindtap="goDetail">待审核 ></view>
+      <view wx:else class="share-btn" data-item="{{share}}" bindtap="goDetail">通过 ></view>
+    </view>
+
+  </view>
+</view>
