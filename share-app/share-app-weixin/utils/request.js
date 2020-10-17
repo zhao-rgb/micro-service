@@ -129,10 +129,10 @@ module.exports = {
   },
   myContribution: (data) => {
     console.log('我的投稿列表')
-    return post('/shares/myContribution', data, 'json') //我的投稿列表
+    return get('/shares/myContribution', data) //我的投稿列表
   },
   myExchange: (data) => {
     console.log('我的兑换列表')
-    return post('/shares/myExchange', data, 'json') //我的兑换列表
+    return get('/shares/myExchange', data) //我的兑换列表
   }
 }

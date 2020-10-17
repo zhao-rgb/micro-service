@@ -8,7 +8,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isOriginal:0
+    isOriginal: 0,
+    title: '',
+    author: '',
+    price: 20,
+    summary: '',
+    cover: '',
+    downloadUrl: '',
+
   },
 
   /**
@@ -71,24 +78,55 @@ Page({
    */
   radioChange(e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
+    // app.globalData.isOriginal = e.detail.value
   },
   //投稿按钮
   contribute() {
+    console.log(app.globalData.isOriginal)
     API.contribute({
-      userId: 1,
-      title: "Docker",
-      isOriginal: true,
-      author: "撒野",
-      cover: "https://kkkksslls.oss-cn-beijing.aliyuncs.com/campus/docker.png",
-      summary: "Docker开源书，涵盖Docker常用命令",
-      price: 30,
-      downloadUrl: "https://book.douban.com/subject/26285268/"
-    }).then( res =>{
+      userId: app.globalData.user.id,
+      title: this.data.title,
+      isOriginal: app.globalData.isOriginal,
+      author: this.data.author,
+      cover: "https://kkkksslls.oss-cn-beijing.aliyuncs.com/campus/java.png",
+      summary: this.data.summary,
+      price: this.data.price,
+      downloadUrl: this.data.downloadUrl
+    }).then(res => {
       const request = JSON.parse(res)
       console.log(request)
       this.setData({
-        userInfo:app.globalData.user
+        userInfo: app.globalData.user
       })
     })
+    //Tab跳转到主页
+    wx.switchTab({
+      url: '../index/index'
+    })
+  },
+  titleInput: function (e) {
+    this.setData({
+      title: e.detail.value
+    });
+  },
+  authorInput: function (e) {
+    this.setData({
+      author: e.detail.value
+    });
+  },
+  priceInput: function (e) {
+    this.setData({
+      price: e.detail.value
+    });
+  },
+  summaryInput: function (e) {
+    this.setData({
+      summary: e.detail.value
+    });
+  },
+  downloadUrlInput: function (e) {
+    this.setData({
+      downloadUrl: e.detail.value
+    });
   }
 })

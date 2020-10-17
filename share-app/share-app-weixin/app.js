@@ -11,20 +11,20 @@ App({
       success: res => {
         wx.request({
           url: 'https://api.weixin.qq.com/sns/jscode2session',
-          data:{
+          data: {
             appid: 'wxbf5467f912902705',
             secret: '72943cf29d99ae697822c4442b0cca6c',
             js_code: res.code,
             grant_type: 'authorization_code'
           },
-          success: res =>{
+          success: res => {
             console.log(res)
             this.globalData.wxId = res.data.openid
           }
         })
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       }
-      
+
     })
     // 获取用户信息
     wx.getSetting({
@@ -44,15 +44,16 @@ App({
               }
             }
           })
-        } 
+        }
       }
     })
   },
   globalData: {
     userInfo: null,
     user: null,
-    token:null,
-    shareList:null,
-    openId: ''
+    token: null,
+    shareList: null,
+    openId: '',
+    isOriginal: 0
   }
 })

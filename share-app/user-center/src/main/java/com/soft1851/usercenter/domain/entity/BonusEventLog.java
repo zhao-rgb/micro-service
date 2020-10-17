@@ -1,5 +1,6 @@
 package com.soft1851.usercenter.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -51,6 +52,7 @@ public class BonusEventLog {
      * 创建时间
      */
     @Column(name = "create_time")
+    @JsonFormat(locale = "zh", timezone = "GMT+8" , pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**

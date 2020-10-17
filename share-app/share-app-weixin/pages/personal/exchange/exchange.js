@@ -74,15 +74,6 @@ Page({
   onShareAppMessage: function () {
 
   },
-
-  /**
-   * 切换tab
-   */
-  changeTab(e) {
-    this.setData({
-      tab: e.currentTarget.dataset.tab
-    })
-  },
   /**
    * 前往兑换成功页
    */
@@ -90,8 +81,9 @@ Page({
     //取出绑定对象
     console.log(e)
     var share = e.currentTarget.dataset.item
+    console.log(share)
     wx.navigateTo({
-      url: '../../duihuanSuccess/duihuanSuccess?share=' + JSON.stringify(share),
+      url: '/pages/duihuanSuccess/duihuanSuccess?share=' + JSON.stringify(share),
     })
   }
 })
